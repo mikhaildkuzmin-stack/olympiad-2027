@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Поступление 2027 — олимпиадный навигатор</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#18212f;--muted:#667085;--line:#e5e7eb;--accent:#3157d5;--green:#177245;--amber:#a15c00}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:1180px;margin:auto;padding:28px 18px 60px}header{padding:28px 0 20px}.eyebrow{font-weight:700;color:var(--accent)}
+h1{font-size:clamp(34px,6vw,66px);line-height:.98;margin:10px 0 16px;letter-spacing:-.04em}.lead{font-size:19px;color:var(--muted);max-width:780px;line-height:1.55}
+.toolbar,.hero-card,.card,.notice{background:var(--card);border:1px solid var(--line);border-radius:18px}.toolbar{padding:14px;display:flex;gap:10px;flex-wrap:wrap;position:sticky;top:8px;z-index:3;box-shadow:0 8px 30px #1018280d}
+input,select,button,.linkbtn{font:inherit;border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:#fff;color:var(--text)}
+input{min-width:230px;flex:1}button{cursor:pointer}.linkbtn{display:inline-block;text-decoration:none;font-weight:700}.primary{background:var(--accent);color:white;border-color:var(--accent)}
+section{margin-top:30px}.sectionhead{display:flex;justify-content:space-between;gap:14px;align-items:end;margin-bottom:14px}h2{margin:0;font-size:26px}.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{padding:18px}.top{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.badge{font-size:12px;font-weight:800;border-radius:999px;padding:6px 9px;background:#eef2ff;color:#3448a5;white-space:nowrap}.badge.open{background:#eaf7ef;color:var(--green)}.badge.soon{background:#fff3df;color:var(--amber)}
+.card h3{margin:5px 0 3px;font-size:21px}.subject{font-weight:700;color:var(--accent)}dl{display:grid;grid-template-columns:150px 1fr;gap:8px 12px;margin:16px 0}dt{color:var(--muted)}dd{margin:0;font-weight:600}.note{font-size:13px;color:var(--muted);line-height:1.45}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.notice{padding:18px;line-height:1.55}.sources{display:flex;gap:10px;flex-wrap:wrap}
+.empty{padding:36px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:18px}
+footer{margin-top:40px;color:var(--muted);font-size:13px;line-height:1.5}
+.tablewrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:18px}
+.matrix{width:100%;border-collapse:collapse;min-width:1050px;font-size:13px}
+.matrix th,.matrix td{padding:11px 10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top}
+.matrix th{position:sticky;top:0;background:#f8fafc;text-align:left;z-index:1}
+.matrix td:first-child,.matrix th:first-child{position:sticky;left:0;background:#fff;z-index:2;min-width:205px}
+.matrix th:first-child{background:#f8fafc;z-index:3}
+.matrix .bvi{font-weight:800;color:#12663f}.matrix .hundred{font-weight:800;color:#3157d5}.matrix .id{font-weight:800;color:#8a4b00}.matrix .check{color:#667085}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}.legend span{background:#fff;border:1px solid var(--line);padding:7px 9px;border-radius:999px;font-size:12px}
+
+@media(max-width:760px){.grid{grid-template-columns:1fr}.toolbar{position:static}dl{grid-template-columns:1fr;gap:2px}dd{margin-bottom:8px}.top{flex-direction:column}.badge{white-space:normal}}
+</style>
+</head>
+<body><main class="wrap">
+<header><div class="eyebrow">ОЛИМПИАДНЫЙ НАВИГАТОР</div><h1>Поступление 2027</h1>
+<p class="lead">Календарь олимпиад для поступления в МГУ, МИФИ и МГТУ им. Баумана. Фокус: математика, физика, информатика, обществознание и русский язык. Даты без подтверждения не угадываем — лучше «ещё не опубликовано», чем олимпиадный фанфик.</p></header>
+
+<div class="toolbar">
+<input id="q" placeholder="Найти олимпиаду или предмет">
+<select id="subject"><option value="">Все предметы</option><option>Математика</option><option>Физика</option><option>Информатика</option><option>Обществознание</option><option>Русский язык</option></select>
+<select id="status"><option value="">Все статусы</option><option value="open">Регистрация открыта</option><option value="registered">Мы зарегистрированы</option><option value="soon">Скоро / позже</option></select>
+<button id="reset">Сбросить</button>
+</div>
+
+<section><div class="sectionhead"><div><h2>Что делать сейчас</h2><div class="muted">Актуально на 25 сентября 2026</div></div></div>
+<div class="notice"><b>Приоритет:</b> проверить слоты «Высшей пробы», затем не пропустить регистрацию «Физтеха» по физике до 3 октября и по математике до 10 октября. 28 сентября открывается регистрация на Всесибирскую по математике. По «Ломоносову» точный день регистрации МГУ пока не объявил.</div></section>
+
+<section><div class="sectionhead"><div><h2>Олимпиады</h2><div class="muted" id="count"></div></div></div><div id="cards" class="grid"></div></section>
+
+<section><div class="sectionhead"><div><h2>Официальные источники</h2><div class="muted">Уровень всегда смотрим по конкретному профилю олимпиады.</div></div></div>
+<div class="sources">
+<a class="linkbtn primary" href="https://rsr-olymp.ru/" target="_blank" rel="noopener">Перечень и уровни РСОШ ↗</a>
+<a class="linkbtn" href="https://olymp-online.mipt.ru/" target="_blank" rel="noopener">Физтех ↗</a>
+<a class="linkbtn" href="https://olymp.hse.ru/mmo/" target="_blank" rel="noopener">Высшая проба ↗</a>
+<a class="linkbtn" href="https://olymp.msu.ru/rus/news" target="_blank" rel="noopener">Ломоносов ↗</a>
+<a class="linkbtn" href="https://sesc.nsu.ru/olymp-vsesib/stages/" target="_blank" rel="noopener">Всесибирская ↗</a>
+</div></section>
+
+
+
+<section id="benefit-matrix">
+<div class="sectionhead"><div><h2>Матрица БВИ / 100 баллов</h2>
+<div class="muted">Ориентир по официальным правилам приёма-2026. Для поступления в 2027 году каждую льготу перепроверяем после публикации новых правил.</div></div></div>
+<div class="legend"><span>🟢 БВИ — без вступительных испытаний</span><span>🔵 100 — 100 ЕГЭ или ДВИ</span><span>🟠 ИД — может дать дополнительные баллы, если диплом не использован как особое право</span><span>⚪ — нужна отдельная проверка по программе/диплому</span></div>
+<div class="tablewrap"><table class="matrix">
+<thead><tr><th>Олимпиада / профиль</th><th>МГУ мехмат</th><th>МГУ ВМК · ПМИ</th><th>МГУ физфак</th><th>МГУ эконом · Экономика</th><th>НИУ ВШЭ · ПМИ / математика</th><th>НИУ ВШЭ · экономика</th><th>НИЯУ МИФИ · мат./ядерные</th><th>МГТУ Баумана</th><th>НИУ МЭИ</th></tr></thead>
+<tbody>
+<tr><td><b>Высшая проба</b><br>математика · I ур. (2025/26)</td>
+<td><span class="bvi">🟢 БВИ</span><br><small>перечневая I ур.; условия мехмата-2026</small></td>
+<td><span class="bvi">🟢 победитель: БВИ</span><br><span class="hundred">🔵 призёр: 100 ДВИ</span></td>
+<td><span class="hundred">🔵 100 математика</span></td>
+<td><span class="bvi">🟢 победитель: БВИ</span><br><span class="check">призёр — сверять</span></td>
+<td><span class="check">⚪ по таблице ВШЭ-2026</span></td><td><span class="check">⚪ по программе</span></td>
+<td><span class="bvi">🟢 БВИ на профильные направления</span></td><td><span class="check">⚪ сверять перечень Бауманки</span></td><td><span class="check">⚪ по соответствию профиля</span></td></tr>
+
+<tr><td><b>Ломоносов</b><br>математика · I ур. (2025/26)</td>
+<td><span class="bvi">🟢 БВИ</span></td><td><span class="bvi">🟢 БВИ</span></td>
+<td><span class="hundred">🔵 100 математика</span></td><td><span class="bvi">🟢 победитель: БВИ</span></td>
+<td><span class="check">⚪ по программе ВШЭ</span></td><td><span class="check">⚪ по программе</span></td>
+<td><span class="check">⚪ профиль/направление</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ сверять</span></td></tr>
+
+<tr><td><b>Физтех</b><br>математика · II ур. (2025/26)</td>
+<td><span class="bvi">🟢 БВИ</span><br><small>для перечневых I–II ур. по математике по правилам мехмата-2026</small></td>
+<td><span class="hundred">🔵 100 ДВИ</span></td><td><span class="hundred">🔵 100 математика</span></td>
+<td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ по программе ВШЭ</span></td><td><span class="check">⚪ по программе</span></td>
+<td><span class="bvi">🟢 БВИ на большинство профильных направлений</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ профильное право</span></td></tr>
+
+<tr><td><b>Всесибирская</b><br>математика · II ур. (2025/26)</td>
+<td><span class="bvi">🟢 БВИ</span></td><td><span class="hundred">🔵 100 ДВИ</span></td><td><span class="hundred">🔵 100 математика</span></td>
+<td><span class="bvi">🟢 победитель/призёр: БВИ</span></td><td><span class="check">⚪ по программе ВШЭ</span></td><td><span class="check">⚪ по программе</span></td>
+<td><span class="bvi">🟢 БВИ на профильные направления</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ сверять</span></td></tr>
+
+<tr><td><b>Высшая проба</b><br>информатика · I ур. (2025/26)</td>
+<td><span class="id">🟠 ИД, если не используется как особое право</span></td>
+<td><span class="bvi">🟢 победитель: БВИ</span><br><span class="hundred">🔵 призёр: 100 ЕГЭ</span></td>
+<td><span class="hundred">🔵 100 информатика</span></td><td><span class="check">⚪ сверять</span></td>
+<td><span class="check">⚪ сильная профильная льгота; смотреть программу</span></td><td><span class="check">⚪ по программе</span></td>
+<td><span class="bvi">🟢 БВИ на профильные направления</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ профильное право</span></td></tr>
+
+<tr><td><b>Всесибирская</b><br>информатика · II ур. (2025/26)</td>
+<td><span class="id">🟠 ИД</span></td><td><span class="hundred">🔵 100 ЕГЭ</span></td><td><span class="hundred">🔵 100 информатика</span></td><td><span class="check">⚪ сверять</span></td>
+<td><span class="check">⚪ по программе ВШЭ</span></td><td><span class="check">⚪ по программе</span></td>
+<td><span class="bvi">🟢 БВИ на профильные направления</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ сверять</span></td></tr>
+
+<tr><td><b>Физтех</b><br>физика · I ур. (2025/26)</td>
+<td><span class="hundred">🔵 100 ЕГЭ физика</span></td><td><span class="hundred">🔵 100 ЕГЭ физика</span></td>
+<td><span class="bvi">🟢 БВИ</span></td><td><span class="check">⚪ не основной профиль</span></td>
+<td><span class="check">⚪ по программе ВШЭ</span></td><td><span class="check">⚪ по программе</span></td>
+<td><span class="bvi">🟢 БВИ на большинство профильных направлений</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ профильное право</span></td></tr>
+
+<tr><td><b>Ломоносов</b><br>физика · I ур. (2025/26)</td>
+<td><span class="hundred">🔵 100 ЕГЭ физика</span></td><td><span class="hundred">🔵 100 ЕГЭ физика</span></td>
+<td><span class="bvi">🟢 БВИ</span></td><td><span class="check">⚪ не основной профиль</span></td>
+<td><span class="check">⚪ по программе ВШЭ</span></td><td><span class="check">⚪ по программе</span></td>
+<td><span class="check">⚪ по направлению</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ сверять</span></td></tr>
+
+<tr><td><b>Шаг в будущее</b><br>физика · II ур. (2025/26)</td>
+<td><span class="hundred">🔵 100 ЕГЭ физика</span></td><td><span class="hundred">🔵 100 ЕГЭ физика</span></td>
+<td><span class="hundred">🔵 100 ДВИ</span></td><td><span class="check">⚪ —</span></td>
+<td><span class="check">⚪ по программе</span></td><td><span class="check">⚪ —</span></td>
+<td><span class="check">⚪ сверять</span></td><td><span class="bvi">🟢 победитель: БВИ</span><br><span class="bvi">🟢 призёр: БВИ*</span><br><small>*кроме отдельных направлений</small></td><td><span class="check">⚪ сверять</span></td></tr>
+
+<tr><td><b>Шаг в будущее</b><br>информатика · III ур. (2025/26)</td>
+<td><span class="id">🟠 ИД / сверять</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ сверять</span></td><td><span class="check">⚪ —</span></td>
+<td><span class="check">⚪ по программе</span></td><td><span class="check">⚪ —</span></td>
+<td><span class="check">⚪ сверять</span></td><td><span class="bvi">🟢 победитель: БВИ</span><br><span class="bvi">🟢 призёр: БВИ*</span><br><small>*кроме 01.03.02, 09.03.04, 10.05.01, 10.05.03</small></td><td><span class="check">⚪ сверять</span></td></tr>
+</tbody></table></div>
+<div class="notice" style="margin-top:14px"><b>Как читать матрицу.</b> Это не обещание льготы на 2027 год, а рабочая карта по официальным правилам приёма-2026. У МГУ и ряда других вузов значение имеет не только название олимпиады, но и профиль, уровень, класс, статус «победитель/призёр» и подтверждающий ЕГЭ (часто не менее 75 баллов). Ячейки «сверять» намеренно оставлены без догадок.</div>
+<div class="sources" style="margin-top:12px">
+<a class="linkbtn" href="https://pk.math.msu.ru/abiturientam/speczialitet/individualnye-dostizheniya-i-olimpiady/" target="_blank">Мехмат МГУ ↗</a>
+<a class="linkbtn" href="https://pk.cs.msu.ru/privilege" target="_blank">ВМК МГУ ↗</a>
+<a class="linkbtn" href="https://open.phys.msu.ru/admission/" target="_blank">Физфак МГУ ↗</a>
+<a class="linkbtn" href="https://www.econ.msu.ru/entrance/bachelor/2026Olympionics/2026RSOSH/" target="_blank">Экономфак МГУ ↗</a>
+<a class="linkbtn" href="https://ba.hse.ru/olimp" target="_blank">ВШЭ ↗</a>
+<a class="linkbtn" href="https://admission.mephi.ru/admission/baccalaureate-and-specialty/specials/winners" target="_blank">МИФИ ↗</a>
+<a class="linkbtn" href="https://olymp.bmstu.ru/ru/" target="_blank">Бауманка ↗</a>
+<a class="linkbtn" href="https://pk.mpei.ru/adrules/special_rights" target="_blank">МЭИ ↗</a>
+</div>
+</section>
+
+<section id="universities">
+<div class="sectionhead"><div><h2>Вузы и направления</h2><div class="muted">Добавили НИУ ВШЭ — Москва. Условия ниже относятся к приёму-2026 и служат ориентиром до публикации правил-2027.</div></div></div>
+<div class="grid">
+<article class="card">
+  <div class="subject">НИУ ВШЭ · ФКН</div><h3>Прикладная математика и информатика</h3>
+  <dl><dt>Код</dt><dd>01.03.02</dd><dt>ЕГЭ 2026</dt><dd>Математика + информатика + русский</dd><dt>Минимумы</dt><dd>75 / 75 / 60</dd><dt>Бюджет 2026</dt><dd>195 мест</dd></dl>
+  <div class="note">Особенно релевантны олимпиады по математике и информатике. Конкретное БВИ/100 проверяем по таблице особых прав ВШЭ для соответствующего года.</div>
+  <div class="actions"><a class="linkbtn primary" href="https://www.hse.ru/ba/ami/admission/" target="_blank" rel="noopener">Страница поступления ↗</a><a class="linkbtn" href="https://ba.hse.ru/olimp" target="_blank" rel="noopener">Олимпиадные льготы ВШЭ ↗</a></div>
+</article>
+<article class="card">
+  <div class="subject">НИУ ВШЭ · МИЭМ</div><h3>Прикладная математика</h3>
+  <dl><dt>Код</dt><dd>01.03.04</dd><dt>ЕГЭ 2026</dt><dd>Математика + физика или информатика + русский</dd><dt>Минимумы</dt><dd>65 / 65 / 60</dd><dt>Бюджет 2026</dt><dd>80 мест</dd></dl>
+  <div class="note">Хорошо ложится на выбранный набор экзаменов: можно использовать физическую или информатическую траекторию.</div>
+  <div class="actions"><a class="linkbtn primary" href="https://www.hse.ru/ba/am/admission/" target="_blank" rel="noopener">Страница поступления ↗</a><a class="linkbtn" href="https://ba.hse.ru/olimp" target="_blank" rel="noopener">Олимпиадные льготы ВШЭ ↗</a></div>
+</article>
+<article class="card">
+  <div class="subject">НИУ ВШЭ · ФЭН + ФКН</div><h3>Экономика и анализ данных</h3>
+  <dl><dt>Направления</dt><dd>38.03.01 Экономика / 01.03.02 ПМИ</dd><dt>ЕГЭ 2026 (экономика)</dt><dd>Математика + обществознание или информатика или иностранный + русский</dd><dt>Минимумы</dt><dd>70 / 65 / 65</dd><dt>Бюджет 2026</dt><dd>60 мест суммарно по программе</dd></dl>
+  <div class="note">Для нашего маршрута особенно интересны связки математика + информатика или математика + обществознание.</div>
+  <div class="actions"><a class="linkbtn primary" href="https://www.hse.ru/ba/eda/admission/" target="_blank" rel="noopener">Страница поступления ↗</a><a class="linkbtn" href="https://ba.hse.ru/olimp" target="_blank" rel="noopener">Олимпиадные льготы ВШЭ ↗</a></div>
+</article>
+<article class="card">
+  <div class="subject">НИУ ВШЭ · ФЭН</div><h3>Экономика</h3>
+  <dl><dt>Направление</dt><dd>38.03.01 Экономика</dd><dt>Статус</dt><dd>Добавлено в маршрут</dd><dt>Олимпиады</dt><dd>БВИ / 100 баллов зависят от профиля олимпиады и правил конкретного года</dd></dl>
+  <div class="note">Сохраняем как отдельную экономическую траекторию наряду с «Экономикой и анализом данных».</div>
+  <div class="actions"><a class="linkbtn primary" href="https://www.hse.ru/ba/economics/tracks" target="_blank" rel="noopener">Поступление ↗</a><a class="linkbtn" href="https://ba.hse.ru/olimp" target="_blank" rel="noopener">Олимпиадные льготы ВШЭ ↗</a></div>
+</article>
+</div>
+</section>
+
+
+<section id="mpei">
+<div class="sectionhead"><div><h2>НИУ «МЭИ»</h2><div class="muted">Москва · техническая траектория для математики, физики и информатики</div></div></div>
+<div class="grid">
+<article class="card">
+  <div class="subject">НИУ «МЭИ» · ИВТИ / ЭнМИ</div><h3>Прикладная математика, информатика и математическое моделирование</h3>
+  <dl><dt>Направления</dt><dd>01.03.02 ПМИ; 01.03.03 Механика и математическое моделирование</dd><dt>ЕГЭ</dt><dd>Математика + физика / информатика + русский</dd><dt>Олимпиады</dt><dd>Математика, физика, информатика и ИКТ — ключевые профили</dd></dl>
+  <div class="note">В правилах МЭИ-2026 победители и призёры олимпиад школьников I–III уровней по математике, физике, информатике и ИКТ и обществознанию могут иметь право БВИ на соответствующие направления. Для поступления-2027 соответствие профиля и условия нужно перепроверить после публикации новых правил.</div>
+  <div class="actions"><a class="linkbtn primary" href="https://pk.mpei.ru/" target="_blank" rel="noopener">Приёмная комиссия МЭИ ↗</a><a class="linkbtn" href="https://pk.mpei.ru/adrules/special_rights" target="_blank" rel="noopener">БВИ и особые права ↗</a></div>
+</article>
+<article class="card">
+  <div class="subject">НИУ «МЭИ» · олимпиадный маршрут</div><h3>«Надежда энергетики» и перечневые олимпиады</h3>
+  <dl><dt>Собственная олимпиада</dt><dd>«Надежда энергетики»</dd><dt>Стратегия</dt><dd>Математика + физика + информатика</dd><dt>Право</dt><dd>В правилах-2026 МЭИ предусмотрено БВИ для подходящих перечневых олимпиад I–III уровней</dd></dl>
+  <div class="note">Добавляем МЭИ в матрицу льгот наряду с МГУ, ВШЭ, МИФИ и Бауманкой. Точный эффект каждого диплома будет показываться отдельно по профилю олимпиады.</div>
+  <div class="actions"><a class="linkbtn primary" href="https://pk.mpei.ru/faq13.html" target="_blank" rel="noopener">Олимпиады МЭИ ↗</a><a class="linkbtn" href="https://rsr-olymp.ru/" target="_blank" rel="noopener">Уровни РСОШ ↗</a></div>
+</article>
+<article class="card">
+  <div class="subject">НИУ «МЭИ» · индивидуальные достижения</div><h3>Дополнительные баллы</h3>
+  <dl><dt>Аттестат с отличием / медаль</dt><dd>10 баллов по правилам-2026</dd><dt>Лимит</dt><dd>Учитываем по актуальным правилам конкретного года</dd></dl>
+  <div class="note">На сайте МЭИ опубликована отдельная таблица индивидуальных достижений для бакалавриата и специалитета. Для поступления-2027 значения перепроверим после обновления правил.</div>
+  <div class="actions"><a class="linkbtn primary" href="https://pk.mpei.ru/info/raitingrules" target="_blank" rel="noopener">Индивидуальные достижения ↗</a></div>
+</article>
+</div>
+</section>
+
+<section><div class="sectionhead"><div><h2>Индивидуальные достижения</h2><div class="muted">Следующий блок для наполнения после публикации правил приёма-2027.</div></div></div>
+<div class="notice">Для МГУ, МИФИ, МГТУ им. Баумана, НИУ ВШЭ и НИУ «МЭИ» здесь будут отдельные карточки: аттестат с отличием, ГТО, итоговое сочинение, неиспользованные олимпиадные дипломы и другие достижения. Баллы за 2027 год нужно брать только из новых правил приёма соответствующего вуза.</div></section>
+
+<footer>Правила приёма 2027 и Перечень олимпиад 2026/27 могут обновляться. Перед регистрацией и подачей документов обязательно сверяйте данные с официальной страницей организатора и вуза.</footer>
+</main>
+<script>
+const DATA = [{"id": "vysshaya-math", "name": "Высшая проба", "subject": "Математика", "level": "уточняется для 2026/27", "status": "registered", "statusText": "Мы зарегистрированы", "regStart": "20.08.2026", "regEnd": "22.09.2026, 14:00 МСК", "next": "1-й тур: 27.09.2026, 09:00 МСК (11 класс)", "stages": "1-й тур: 25.09–11.10.2026; 2-й тур: 13–22.11.2026; финал: 05–15.02.2027", "url": "https://olymp.hse.ru/mmo/", "note": "Регистрация завершена. Для 11 класса математика — 27 сентября в 09:00 МСК."}, {"id": "vysshaya-soc", "name": "Высшая проба", "subject": "Обществознание", "level": "уточняется для 2026/27", "status": "registered", "statusText": "Мы зарегистрированы", "regStart": "20.08.2026", "regEnd": "22.09.2026, 14:00 МСК", "next": "1-й тур: 26.09.2026, 12:00 или 02.10.2026, 16:00 МСК (11 класс)", "stages": "1-й тур: 25.09–11.10.2026; 2-й тур: 13–22.11.2026; финал: 05–15.02.2027", "url": "https://olymp.hse.ru/mmo/", "note": "Для профилей с двумя датами нужно выбрать один слот."}, {"id": "vysshaya-rus", "name": "Высшая проба", "subject": "Русский язык", "level": "уточняется для 2026/27", "status": "registered", "statusText": "Мы зарегистрированы", "regStart": "20.08.2026", "regEnd": "22.09.2026, 14:00 МСК", "next": "1-й тур: 25.09.2026, 13:00 или 04.10.2026, 10:00 МСК (11 класс)", "stages": "1-й тур: 25.09–11.10.2026; 2-й тур: 13–22.11.2026; финал: 05–15.02.2027", "url": "https://olymp.hse.ru/mmo/", "note": "Для профилей с двумя датами нужно выбрать один слот."}, {"id": "fizteh-physics", "name": "Физтех", "subject": "Физика", "level": "I (по перечню 2025/26; 2026/27 перепроверить)", "status": "open", "statusText": "Регистрация открыта", "regStart": "07.09.2026, 10:00 МСК", "regEnd": "03.10.2026, 10:00 МСК", "next": "1-й тур: 04.10.2026, 10:00 МСК", "stages": "2-й тур: 25.10.2026; 3-й тур: 08.11.2026; финал: 13.02.2027", "url": "https://olymp-online.mipt.ru/", "note": "МФТИ помечает расписание как предварительное: даты могут измениться."}, {"id": "fizteh-math", "name": "Физтех", "subject": "Математика", "level": "II (по перечню 2025/26; 2026/27 перепроверить)", "status": "open", "statusText": "Регистрация открыта", "regStart": "07.09.2026, 10:00 МСК", "regEnd": "10.10.2026, 10:00 МСК", "next": "1-й тур: 11.10.2026, 10:00 МСК", "stages": "2-й тур: 01.11.2026; 3-й тур (11 класс): 07.11.2026; финал: 14.02.2027", "url": "https://olymp-online.mipt.ru/", "note": "После подтверждённой регистрации повторно регистрироваться на последующие туры не нужно."}, {"id": "fizteh-rus", "name": "Физтех", "subject": "Русский язык", "level": "уточняется для 2026/27", "status": "open", "statusText": "Регистрация открыта", "regStart": "07.09.2026, 10:00 МСК", "regEnd": "30.10.2026, 10:00 МСК", "next": "Онлайн-тур: 08.11–08.12.2026", "stages": "Финал: 13.02.2027", "url": "https://olymp-online.mipt.ru/", "note": "Онлайн-тур длится 2 часа; начать можно в любое время в указанном диапазоне."}, {"id": "lomonosov", "name": "Ломоносов", "subject": "Математика / физика / др.", "level": "Будет указан после утверждения перечня 2026/27", "status": "soon", "statusText": "Регистрация ещё не открыта", "regStart": "Вторая половина октября 2026", "regEnd": "Не опубликовано", "next": "Отборочный этап: октябрь–декабрь 2026", "stages": "Точный график МГУ обещал опубликовать позже.", "url": "https://olymp.msu.ru/rus/page/main/29/news/602e2e2f-787c-42b5-9ea6-8fb3626bbb4c", "note": "Не ставим выдуманную точную дату: МГУ пока назвал только период открытия регистрации."}, {"id": "vsesib-math", "name": "Всесибирская открытая олимпиада", "subject": "Математика", "level": "II (по перечню 2025/26; 2026/27 перепроверить)", "status": "soon", "statusText": "Регистрация скоро", "regStart": "28.09.2026", "regEnd": "16.10.2026", "next": "Отборочный этап: 18.10.2026, 11:00 по Новосибирску", "stages": "Финал: 14.02.2027, 11:00 по Новосибирску", "url": "https://sesc.nsu.ru/olymp-vsesib/stages/", "note": "Официальная страница НГУ может ограничивать автоматический доступ; перед участием сверить дату непосредственно на ней."}, {"id": "vsesib-physics", "name": "Всесибирская открытая олимпиада", "subject": "Физика", "level": "II (по перечню 2025/26; 2026/27 перепроверить)", "status": "soon", "statusText": "Регистрация позже", "regStart": "26.10.2026", "regEnd": "13.11.2026", "next": "Отборочный этап: 15.11.2026, 11:00 по Новосибирску", "stages": "Финал: 14.03.2027, 11:00 по Новосибирску", "url": "https://sesc.nsu.ru/olymp-vsesib/stages/", "note": "Перед участием сверить расписание на официальной странице НГУ."}, {"id": "vsesib-info", "name": "Всесибирская открытая олимпиада", "subject": "Информатика", "level": "уточняется для 2026/27", "status": "soon", "statusText": "Регистрация позже", "regStart": "19.10.2026", "regEnd": "06.11.2026", "next": "Отборочный этап: 08.11.2026", "stages": "Следующие этапы — по официальному расписанию НГУ.", "url": "https://sesc.nsu.ru/olymp-vsesib/stages/", "note": "Перед участием сверить расписание на официальной странице НГУ."}];
+const cards=document.getElementById('cards'), q=document.getElementById('q'), subject=document.getElementById('subject'), status=document.getElementById('status'), count=document.getElementById('count');
+function render(){
+ const query=q.value.trim().toLowerCase(), s=subject.value, st=status.value;
+ const rows=DATA.filter(x=>(!query || (x.name+' '+x.subject+' '+x.note).toLowerCase().includes(query)) && (!s || x.subject.includes(s)) && (!st || x.status===st));
+ count.textContent=rows.length+' записей';
+ cards.innerHTML=rows.length?rows.map(x=>`<article class="card"><div class="top"><div><div class="subject">${x.subject}</div><h3>${x.name}</h3></div><span class="badge ${x.status}">${x.statusText}</span></div>
+ <dl><dt>Уровень</dt><dd>${x.level}</dd><dt>Регистрация</dt><dd>${x.regStart} — ${x.regEnd}</dd><dt>Ближайшее</dt><dd>${x.next}</dd><dt>Дальше</dt><dd>${x.stages}</dd></dl>
+ <div class="note">${x.note}</div><div class="actions"><a class="linkbtn primary" href="${x.url}" target="_blank" rel="noopener">Официальная страница ↗</a></div></article>`).join(''):'<div class="empty">По этим фильтрам ничего нет.</div>';
+}
+[q,subject,status].forEach(el=>el.addEventListener('input',render)); document.getElementById('reset').onclick=()=>{q.value='';subject.value='';status.value='';render()}; render();
+</script></body></html>
